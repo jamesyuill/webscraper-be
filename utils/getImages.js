@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 
-export const getImages = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+const getImages = async (searchTerm) => {
+  const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
-  await page.goto('https://en.wikipedia.org/wiki/Simon_Le_Bon');
+  await page.goto(`https://en.wikipedia.org/wiki/${searchTerm}`);
 
   const data = await page.evaluate(() => {
     const pictures = document.getElementsByTagName('img');
@@ -14,5 +14,7 @@ export const getImages = async () => {
     }
     return imageSourceArr;
   });
-  console.log(data);
+  return data;
 };
+
+module.exports = { getImages };
